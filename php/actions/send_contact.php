@@ -1,23 +1,23 @@
 <?php
-
-if($_SERVER['REQUEST_METHOD']=="POST"){
-	
 require('db_config.php');
 
-extract($_POST);
-$date = date("Y-m-d h:i:sa");
-
+if($_SERVER["REQUEST_METHOD"] == "POST" )
+{
+  extract($_POST);
+  echo $_POST['full_name'];
+  echo $_POST['email'];
+  echo $_POST['message'];
 $link->query("INSERT INTO contact_us VALUES
-('', '$name', '$email', '$company', '$website', '$message', '$date')");
+('', '$full_name', '$email', '$message', '')");
 
-if($link->affected_rows>0){
+if($link->affected_rows > 0){
 	
-echo "<h2>Data Sent Successfully</h2>";
+echo "<div class='alert alert-dismissible alert-success'>Sent Successfully</div>";
 
 }
 else{
 	
-	echo "<h2>Data submit not successfull</h2>";
+	echo "<div class='alert alert-dismissible alert-danger'>Something is Wrong. Try Again Later</div>";
 }
 
 }

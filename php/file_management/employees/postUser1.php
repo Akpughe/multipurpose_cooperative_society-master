@@ -1,12 +1,17 @@
 <?php
-include '../actions/conn.php';
+include '../../actions/conn.php';
 session_start();
 $userId=$_SESSION['id'];
-$query = "SELECT * FROM `users` WHERE `id` ='$userId' LIMIT 1 ";
+$branchId = $_SESSION['branch_id'];
+$query = "SELECT * FROM `employees` WHERE `id` ='$userId' AND `branch_id` = '$branchId' LIMIT 1 ";
+$bquery = "SELECT * FROM `branchs` WHERE `branch_id`='$branchId'";
 $result = mysqli_query($link,$query);
+$bresult = mysqli_query($link,$bquery);
 $row = mysqli_fetch_array($result);
-$nameDisplay = $row['username'];
+$brow = mysqli_fetch_array($bresult);
+$nameDisplay = $row['full_name'];
 $deptDisplay = $row['department'];
+$branchDisplay = $brow['name'];
 
 
 if($_POST["nfileId"]){
@@ -24,25 +29,25 @@ if($_POST["nfileId"]){
   $remarks = mysqli_real_escape_string($link,$_POST["remarks"]);
   $date = date("Y-m-d h:i:s");
 
-  $query1 = "INSERT INTO `outgoing` (`file_reference`,`file_subject`,`start_page`,`stop_page`,`file_remarks`,`dept_from`,`dept_to`,`status`,`folioout`,`date`) VALUES ('$file_reference','$file_subject','$stop_page','$newAdd','$remarks','$deptDisplay','$deptTo','Active','$folioOut','$date')";
+  $query1 = "INSERT INTO `outgoing_file` (`file_reference`,`file_subject`,`start_page`,`stop_page`,`file_remarks`,`dept_from`,`dept_to`,`status`,`folioout`,`date`) VALUES ('$file_reference','$file_subject','$stop_page','$newAdd','$remarks','$deptDisplay','$deptTo','Active','$folioOut','$date')";
 
-  $query2 = "INSERT INTO `history` (`file_reference`,`file_subject`,`date`,`action`,`dept_from`,`dept_to`,`user`,`start_page`,`stop_page`,`file_remarks`,`status`,`folioout`) VALUES ('$file_reference','$file_subject','$date','Outgoing','$deptDisplay','$deptTo','$nameDisplay','$stop_page','$newAdd','$remarks','Active','$folioOut')";
+  $query2 = "INSERT INTO `history` (`file_reference`,`file_subject`,`date`,`action`,`dept_from`,`dept_to`,`employee`,`start_page`,`stop_page`,`file_remarks`,`status`,`folioout`) VALUES ('$file_reference','$file_subject','$date','Outgoing','$deptDisplay','$deptTo','$nameDisplay','$stop_page','$newAdd','$remarks','Active','$folioOut')";
 
 
 
   if(mysqli_query($link,$query1)  &&  mysqli_query($link,$query2))
   {
-    $query3 = "UPDATE `incoming` SET `file_reference`='$file_reference',`file_subject`='$file_subject',`dept_from`='$deptDisplay',`dept_to`='$deptTo',`user_from`='$nameDisplay',`date`='$date',`start_page`='$stop_page',`stop_page`='$newAdd',`file_remarks`='$remarks',`status`='Active'";
+    $query3 = "UPDATE `incoming_file` SET `file_reference`='$file_reference',`file_subject`='$file_subject',`dept_from`='$deptDisplay',`dept_to`='$deptTo',`user_from`='$nameDisplay',`date`='$date',`start_page`='$stop_page',`stop_page`='$newAdd',`file_remarks`='$remarks',`status`='Active'";
     if(mysqli_query($link,$query3)){
       $output = "<div class='alert alert-success'><strong><h5>You Have Successfully Posted this File. You will be redirected to your main page</h5></strong></div>";
-      header("refresh:2;url=http://localhost/File Tracker/php/user/user.php");
+      header("refresh:2;url=http://localhost/multipurpose_cooperative_society-master/php/file_management/employees/user.php");
     }else{
       $output = "<div class='alert alert-danger'><strong><h5>Error Please Try again Later.</h5></strong></div>";
-      header("refresh:1;url=http://localhost/File Tracker/php/user/user.php");
+      header("refresh:2;url=http://localhost/multipurpose_cooperative_society-master/php/file_management/employees/user.php");
     }
   }else{
     $output = "<div class='alert alert-success'><strong><h5>Error Please Try again later.</h5></strong></div>";
-    header("refresh:1;url=http://localhost/File Tracker/php/user/user.php");
+    header("refresh:2;url=http://localhost/multipurpose_cooperative_society-master/php/file_management/employees/user.php");
   }
 }else{
   $output = "NO Session Variable Detected";
@@ -55,8 +60,7 @@ if($_POST["nfileId"]){
 <head>
 <meta charset=utf-8 />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User</title>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<title>Employee Dashboard</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css">
 <script src="../../js/jQuery.js"></script>
  <script src="../../js/bootstrap.min.js"></script>

@@ -1,13 +1,12 @@
 <?php
-include '../actions/conn.php';
+include '../../actions/db_config.php';
 ?>
 <!Doctype html>
 <html lang=en>
  <head>
    <meta charset=utf-8 />
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>User</title>
-   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+   <title>Employee Dashboard</title>
    <link rel="stylesheet" href="../../css/bootstrap.min.css">
    <script src="../../js/jQuery.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
@@ -71,13 +70,13 @@ include '../actions/conn.php';
              <label for="deptTo">Destination Department:</label>
              <select name="deptTo" class="form-control">
                <?php
-                 $askdb= "SELECT * FROM department";
+                 $askdb= "SELECT * FROM departments";
                  $ansdb = $link->query($askdb);
                  if(mysqli_query($link,$askdb)){
                    if(mysqli_num_rows($ansdb)> 0){
                      while($option=mysqli_fetch_assoc($ansdb)){
-                       echo " <option value='".$option["department_name"]."'>
-                       ".$option["department_name"]."
+                       echo " <option value='".$option["dept_name"]."'>
+                       ".$option["dept_name"]."
                        </option>";
                      }
                    }

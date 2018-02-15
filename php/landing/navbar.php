@@ -16,12 +16,12 @@
       <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          User
+          Welcome
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Login</a>
+          <a class="dropdown-item" href="./login_page.php">Login User</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Register</a>
+          <a class="dropdown-item" href="./register_user.php">Register User</a>
         </div>
       </li>
     </ul>

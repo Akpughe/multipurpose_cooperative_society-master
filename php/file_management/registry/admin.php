@@ -1,19 +1,19 @@
 <?php
-  include '../actions/conn.php';
+include '../../actions/conn.php';
+session_start();
+$_SESSION['id'] = $userID;
+$_SESSION['branch_id'] = $branch_id; 
 ?>
 <!Doctype html>
 <html lang="en">
   <head>
     <meta charset=utf-8 />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registry</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/bootstrap-theme.min.css">
-    <script src="../../js/jQuery.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/admin.js"></script>
-    <script src="../../js/update.js"> </script>
+    <title>Registry Admin</title>
+    <link rel="stylesheet" href='../css/bootstrap.min.css'>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/jquery-3.3.1.min.js"> </script>
     <style>
     h1,h2,h3 {
       color:#CCA567 ;
@@ -54,7 +54,6 @@
       margin-bottom: 30px;
       font-size-adjust: auto;
     }
-
       .container {
         width:auto;
         height:auto;
@@ -68,13 +67,10 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-inverse ">
-      <div class="container-fluid text-center">
-        <div class="navbar-header">
-          <h1 class="navh1 ">Welcome Admin</h1>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="../../index.php?logout=1">Logout</a></li>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+          <h1 class="navbar-brand">Welcome Admin</h1>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="../../login_page.php?logout=1">Logout</a></li>
         </ul>
 
       </div>
@@ -82,25 +78,25 @@
     <div class="container-fluid">
       <div class="row text-center">
         <h1>Creation</h1>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#genFile"><span class="glyphicon glyphicon-folder-open icon"></span><h2>File</h2></button>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#genUser"><span class="glyphicon glyphicon-user icon"></span><h2>User</h2></button>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#genDept"><span class="glyphicon glyphicon-home icon"></span><h2>Dept.</h2></button>
         </div>
       </div>
       <div class="row text-center">
         <h1>Management</h1>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#manFile"><span class="glyphicon glyphicon-folder-open icon"></span><h2>File</h2></button>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#manUser"><span class="glyphicon glyphicon-user icon"></span><h2>User</h2></button>
         </div>
-        <div class="col-md-4 text-center">
+        <div class="col-md text-center">
           <button type="button" class="btn btn-default btn-md text-center" data-toggle="modal" data-target="#manDept"><span class="glyphicon glyphicon-home icon"></span><h2>Dept.</h2></button>
         </div>
       </div>
@@ -138,18 +134,18 @@
                     <label for="fdept">Destination Department:</label>
                     <select name="fdept" class="form-control">
                       <?php
-                        $askdb= "SELECT * FROM department";
-                        $ansdb = $link->query($askdb);
-                        if(mysqli_query($link,$askdb)){
-                          if(mysqli_num_rows($ansdb)> 0){
-                            while($option=mysqli_fetch_assoc($ansdb)){
-                              echo " <option value='".$option["department_name"]."'>
-                              ".$option["department_name"]."
+                      $askdb = "SELECT * FROM departments WHERE `branch_id` = '$branch_id' ";
+                      $ansdb = $link->query($askdb);
+                      if (mysqli_query($link, $askdb)) {
+                        if (mysqli_num_rows($ansdb) > 0) {
+                          while ($option = mysqli_fetch_assoc($ansdb)) {
+                            echo " <option value='" . $option["dept_name"] . "'>
+                              " . $option["dept_name"] . "
                               </option>";
-                            }
                           }
                         }
-                       ?>
+                      }
+                      ?>
                     </select>
                   </div>
                   <div class="form-group">
@@ -162,7 +158,7 @@
           </div>..
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark btn-lg" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -191,18 +187,18 @@
                   <label for="udept">Department:</label>
                   <select name="udept" class="form-control">
                     <?php
-                      $askdb= "SELECT * FROM department";
-                      $ansdb = $link->query($askdb);
-                      if(mysqli_query($link,$askdb)){
-                        if(mysqli_num_rows($ansdb)> 0){
-                          while($option=mysqli_fetch_assoc($ansdb)){
-                            echo " <option value='".$option["department_name"]."'>
-                            ".$option["department_name"]."
+                    $askdb = "SELECT * FROM departments WHERE `branch_id` = '$branch_id'";
+                    $ansdb = $link->query($askdb);
+                    if (mysqli_query($link, $askdb)) {
+                      if (mysqli_num_rows($ansdb) > 0) {
+                        while ($option = mysqli_fetch_assoc($ansdb)) {
+                          echo " <option value='" . $option["dept_name"] . "'>
+                            " . $option["dept_name"] . "
                             </option>";
-                          }
                         }
                       }
-                     ?>
+                    }
+                    ?>
                   </select>
                 </div>
                 <div class="form-group">
@@ -217,13 +213,13 @@
                   <label for="upwd2">Confirm Password:</label>
                   <input class="form-control" name="upwd2" id="upwd2" placeholder="Confirm Password" type="password" />
                 </div>
-                <button type="button" id="genUser_submit" class="btn btn-lg btn-danger">Create Account</button>
+                <button type="button" id="genUser_submit" class="btn btn-lg btn-dark">Create Account</button>
               </form>
             </div>
           </div>..
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark btn-lg" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -248,13 +244,13 @@
                   <label for="dname">Department Name:</label>
                   <input type="text" class="form-control" placeholder="Input Department Name" name="dname" id="dname"/>
                 </div>
-                <button type="button" id="genDept_submit" class="btn btn-lg btn-danger">Register</button>
+                <button type="button" id="genDept_submit" class="btn btn-lg btn-dark">Register</button>
               </form>
             </div>
           </div>..
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark btn-lg" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -275,7 +271,7 @@
             </div>
           </div>
 
-          ..<div class="container-fluid">
+          <div class="container-fluid">
               <div class="row">
                 <div class="table-responsive">
                   <table class="table table-hover table-bordered">
@@ -306,29 +302,29 @@
                       </th>
                     </tr>
                       <?php
-                        $query1 = "SELECT * FROM incoming";
-                        $result1 = $link->query($query1);
-                        if(mysqli_query($link,$query1)){
-                          if(mysqli_num_rows($result1) > 0){
-                            while($row = mysqli_fetch_assoc($result1)){
-                              echo "<tr><td>".$row["file_subject"]."</td><td>".$row["file_reference"]."</td><td>".$row["file_remarks"]."</td><td>".$row["date"]."
+                      $query1 = "SELECT * FROM `incoming_file`";
+                      $result1 = $link->query($query1);
+                      if (mysqli_query($link, $query1)) {
+                        if (mysqli_num_rows($result1) > 0) {
+                          while ($row = mysqli_fetch_assoc($result1)) {
+                            echo "<tr><td>" . $row["file_subject"] . "</td><td>" . $row["file_reference"] . "</td><td>" . $row["file_remarks"] . "</td><td>" . $row["date"] . "
                               </td>
                               <td>
-                                ".$row["dept_to"]."
+                                " . $row["dept_to"] . "
                               </td>
                               <td>
-                                ".$row["status"]."
+                                " . $row["status"] . "
                               </td>
-                              <td>".$row["start_page"]."</td><td>".$row["stop_page"]."</td><td><form action='./archiveFile.php' method='POST'><button type='submit' id='arFile' name='arFile'  value='".$row["id"]."' class='btn btn-warning'>Archive File</button></form></td>
+                              <td>" . $row["start_page"] . "</td><td>" . $row["stop_page"] . "</td><td><form action='./archiveFile.php' method='POST'><button type='submit' id='arFile' name='arFile'  value='" . $row["id"] . "' class='btn btn-danger'>Archive File</button></form></td>
                                 <td>
                                   <form action='./historyFile.php' method='POST'>
-                                  <button type='submit' class='btn btn-info' id='hFile' name='hFile' value = '".$row["file_reference"]."'>View History</button>
+                                  <button type='submit' class='btn btn-info' id='hFile' name='hFile' value = '" . $row["file_reference"] . "'>View History</button>
                                   </form>
                                 </td>
                               </tr>";
-                            }
                           }
                         }
+                      }
                       ?>
                   </table>
                 </div>
@@ -336,7 +332,7 @@
           </div>.
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-dark btn-lg" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
@@ -378,37 +374,37 @@
                     </th>
                   </tr>
                   <?php
-                    $queryi = "SELECT * FROM users";
-                    $resulti = $link->query($queryi);
-                    if(mysqli_query($link,$queryi)){
-                      if(mysqli_num_rows($resulti) > 0){
-                        while($rowi = mysqli_fetch_assoc($resulti)){
-                          echo "<tr>
+                  $queryi = "SELECT * FROM `employees`";
+                  $resulti = $link->query($queryi);
+                  if (mysqli_query($link, $queryi)) {
+                    if (mysqli_num_rows($resulti) > 0) {
+                      while ($rowi = mysqli_fetch_assoc($resulti)) {
+                        echo "<tr>
                           <td>
-                          ".$rowi["username"]."
+                          " . $rowi["fullname"] . "
                           </td>
                           <td>
-                          ".$rowi["email"]."
+                          " . $rowi["email"] . "
                           </td>
                           <td>
-                          ".$rowi["department"]."
+                          " . $rowi["department"] . "
                           </td>
                           <td>
-                          ".$rowi["date_registered"]."
+                          " . $rowi["joining_date"] . "
                           </td>
                           <td>
-                          ".$rowi["status"]."
+                          " . $rowi["status"] . "
                           </td>
                           <td>
                           <form action='./updateUser.php' method='POST'>
-                          <button type='submit' id='upUser' name='upUser' value='".$rowi["id"]."' class='btn btn-warning'>Edit</button>
+                          <button type='submit' id='upUser' name='upUser' value='" . $rowi["id"] . "' class='btn btn-warning'>Edit</button>
                           </form>
                           </td>
                           </tr>";
-                        }
                       }
                     }
-                   ?>
+                  }
+                  ?>
                 </table>
               </div>
             </div>
@@ -445,15 +441,15 @@
                     </th>
                   </tr>
                   <?php
-                    $query3 ="SELECT * FROM department";
-                    $result3 = $link->query($query3);
-                    if(mysqli_query($link,$query3)){
-                     if(mysqli_num_rows($result3)){
-                      while($row2 = mysqli_fetch_assoc($result3)){
-                        echo "<tr><td>".$row2["department_name"]."</td><td class='text-center'><form action='./updateDept.php' method='POST'><button type='submit' id='upDept' name='upDept' value='".$row2["id"]."' class='btn btn-warning'>Edit</button></td></tr>";
+                  $query3 = "SELECT * FROM `departments` WHERE `branch_id`='$branch_id'";
+                  $result3 = $link->query($query3);
+                  if (mysqli_query($link, $query3)) {
+                    if (mysqli_num_rows($result3)) {
+                      while ($row2 = mysqli_fetch_assoc($result3)) {
+                        echo "<tr><td>" . $row2["dept_name"] . "</td><td class='text-center'><form action='./updateDept.php' method='POST'><button type='submit' id='upDept' name='upDept' value='" . $row2["id"] . "' class='btn btn-warning'>Edit</button></td></tr>";
                       }
                     }
-                    }
+                  }
                   ?>
                 </table>
               </div>
@@ -466,5 +462,4 @@
       </div>
     </div>
   </div>
-
 </html>

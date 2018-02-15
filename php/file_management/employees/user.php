@@ -1,25 +1,28 @@
 <?php
-  include '../actions/conn.php';
+  include '../../actions/db_config.php';
   session_start();
-  $userId=$_SESSION['id'];
+  $userId = $_SESSION['id'];
+  $branchId = $_SESSION['branch_id'];
 
-  $query = "SELECT * FROM `users` WHERE `id` ='$userId' LIMIT 1 ";
+  $query = "SELECT * FROM `employees` WHERE `employee_id` = '$userId' LIMIT 1 ";
+  $bquery = "SELECT * FROM `branches` WHERE `branch_id` = '$branchId' LIMIT 1";
   $result = mysqli_query($link,$query);
+  $bresult = mysqli_query($link,$bquery);
+  $brow = mysqli_fetch_array($bresult);
   $row = mysqli_fetch_array($result);
-  $nameDisplay = $row['username'];
+  $nameDisplay = $row['full_name'];
   $deptDisplay = $row['department'];
+  $branchDisplay = $brow['name'];
 ?>
 <!Doctype html>
 <html lang="en">
   <head>
     <meta charset=utf-8 />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <title>Employee Dashboard</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <script src="../../js/jQuery.js"></script>
-     <script src="../../js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="../../css/styles.css">
+    <script src="../../js/bootstrap.min.js"></script>
     <style>
       .container{
         width:auto;
@@ -79,6 +82,7 @@
       <div class="container-fluid text-center">
         <div class="navbar-header">
           <h1 class="navh1 ">Welcome <?php echo " ".$nameDisplay."<h4 > in ".$deptDisplay."  Department</h4>"; ?></h1>
+          <small>MCS Branch <?php echo "".$branchDisplay."" ?></small>
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="../../index.php?logout=1"> Logout</a></li>
@@ -123,7 +127,7 @@
                         </th>
                       </tr>
                       <?php
-                        $query0 = "SELECT * FROM incoming WHERE `dept_to`='$deptDisplay' AND `status`='Active'";
+                        $query0 = "SELECT * FROM incoming_file WHERE `dept_to`='$deptDisplay' AND `status`='Active' and `branch_id` = '$branchId'";
                         $result0 = $link->query($query0);
                         if(mysqli_query($link,$query0)){
                           if(mysqli_num_rows($result0) > 0){
@@ -197,7 +201,7 @@
                         </th>
                       </tr>
                       <?php
-                        $query1 = "SELECT * FROM `incoming` WHERE `dept_to`='$deptDisplay' AND `status`='Approved'";
+                        $query1 = "SELECT * FROM `incoming_file` WHERE `dept_to`='$deptDisplay' AND `status`='Approved' AND `branch_id`='$branchId'";
                         $result1 = $link->query($query1);
                         if(mysqli_query($link,$query1)){
                           if(mysqli_num_rows($result1) > 0){
@@ -273,7 +277,7 @@
                       </th>
                     </tr>
                     <?php
-                      $query2="SELECT * FROM `outgoing` WHERE `dept_from`='$deptDisplay'";
+                      $query2="SELECT * FROM `outgoing_file` WHERE `dept_from`='$deptDisplay' and `branch_id`='$branchId'";
                       $result2= $link->query($query2);
                       if(mysqli_query($link,$query2)){
                         if(mysqli_num_rows($result)> 0){

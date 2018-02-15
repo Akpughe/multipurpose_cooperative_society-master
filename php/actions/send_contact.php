@@ -1,12 +1,9 @@
 <?php
-require('db_config.php');
+require('./conn.php');
 
 if($_SERVER["REQUEST_METHOD"] == "POST" )
 {
   extract($_POST);
-  echo $_POST['full_name'];
-  echo $_POST['email'];
-  echo $_POST['message'];
 $link->query("INSERT INTO contact_us VALUES
 ('', '$full_name', '$email', '$message', '')");
 

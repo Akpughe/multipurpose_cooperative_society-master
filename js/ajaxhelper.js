@@ -1,100 +1,37 @@
-$(document).ready(function () {
-    /*  $("#genFile_form").on("submit", function(e) {
-            var postData = $(this).serializeArray();
-            var formURL = $(this).attr("action");
-            $.ajax({
-                url: formURL,
-                type: "POST",
-                data: postData,
-                success: function(data, textStatus, jqXHR) {
-                    $('#genFile .response').html(data);
-            $('#genFile .response').fadeOut(1000, function() {
-              location.reload();
-            });
-                },
-                error: function(jqXHR, status, error) {
-                    console.log(status + ": " + error);
-                }
-            });
-            e.preventDefault();
-        });
-      $("#genUser_form").on("submit", function(e){
-        var postData = $(this).serializeArray();
-            var formURL = $(this).attr("action");
-            $.ajax({
-                url: formURL,
-                type: "POST",
-                data: postData,
-                success: function(data, textStatus, jqXHR) {
-                    $('#genUser .response2').html(data);
-            $('#genUser .response2').fadeOut(1000, function() {
-              location.reload();
-            });
-                },
-                error: function(jqXHR, status, error) {
-                    console.log(status + ": " + error);
-                }
-            });
-            e.preventDefault();
-      });
-      $("#genDept_form").on("submit", function(e){
-        var postData = $(this).serializeArray();
-            var formURL = $(this).attr("action");
-            $.ajax({
-                url: formURL,
-                type: "POST",
-                data: postData,
-                success: function(data, textStatus, jqXHR) {
-                    $('#genDept .response3').html(data);
-            $('#genDept .response3').fadeOut(1000, function() {
-              location.reload();
-            });
-                },
-                error: function(jqXHR, status, error) {
-                    console.log(status + ": " + error);
-                }
-            });
-            e.preventDefault();
-      });
-        $("#genFile_submit").on('click', function() {
-        if (confirm("Click Cancel to Edit Values Before Submitting and Click Ok to Submit !!.  Note You Won't Be able to Edit It Afterwards") == true){
-          $("#genFile_form").submit();
-        }
-        });
-      $("#genUser_submit").on('click', function(){
-        if (confirm("Click Cancel to Edit Values Before Submitting and Click Ok to Submit !!") == true){
-        $("#genUser_form").submit();
-      }
-      });
-      $("#genDept_submit").on('click', function(){
-        if (confirm("Click Cancel to Edit Values Before Submitting and Click Ok to Submit !!") == true){
-        $("#genDept_form").submit();
-      }
-      });
-    */
-
-    function submitCall(div_id) {
-        let x = div_id;
-        if (confirm("Click Cancel to Edit Values Before Submitting and Click Ok to Submit !!") == true) {
-            console.log(x);
-            let form_id = "#" + x + "_form";
-            genericAjax(form_id);
-        }
+/*Remember to use this fucntion name your form anyting_form,
+  The response div anything_form_response,
+  The button to trigger the submission anything_form_button,
+  then onclick of that button submitCall(anything) and watch the magic */
+function  submitCall(div_id) {
+    console.log(div_id);
+    event.preventDefault();
+    let x = div_id;
+    console.log(x)
+    if (confirm("Click Cancel to Confirm Values Before Submitting and Click Ok to Submit !!") == true) {
+        console.log(x);
+        let form_id = "#" + x + "_form";
+        console.log(form_id)
+        genericAjax(form_id);
     }
+};
 
-    function genericAjax(x) {
-        var postData = $(this).serializeArray();
-        var formURL = $(this).attr("action");
-        $.ajax({
-            url: formURL,
-            type: "POST",
-            data: postData,
-            success: function (data, textStatus, jqXHR) {
-                alert(data);
-            },
-            error: function (jqXHR, status, error) {
-                console.log(status + ": " + error);
-            }
-        });
-    }
-});
+ function genericAjax(x) {
+    var postData = $(x).serializeArray();
+    var formURL = $(x).attr("action");
+    $.ajax({
+        url: formURL,
+        type: "POST",
+        data: postData,
+        success: function (data, textStatus, jqXHR) {
+            $(x+'_button').hide();
+            $(x+'_response').html(data);
+            $(x+'_response').focus();
+            console.log(data);
+        },
+        error: function (jqXHR, status, error) {
+            alert('Error please try again');
+            console.log(status + ": " + error);
+        }
+    });
+}
+// this code belongs to dop3ch3f

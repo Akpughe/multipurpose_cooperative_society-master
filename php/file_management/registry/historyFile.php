@@ -1,3 +1,4 @@
+
 <!Doctype html >
 <html lang="en">
   <head>
@@ -98,8 +99,10 @@
               </th>
             </tr>
             <?php
-              include '../actions/conn.php';
-              $hFile= $_POST["hFile"];
+              include '../../actions/conn.php';
+              session_start();
+              extract($_SESSION);
+              extract($_POST);
 
               if($hFile){
                 $query="SELECT * FROM `history` WHERE `file_reference`='$hFile'";

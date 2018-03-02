@@ -1,11 +1,11 @@
 <?php
-  include '../actions/conn.php';
+  include '../../actions/conn.php';
   $arFile=$_POST["arFile"];
   $date = date("Y-m-d h:i:s");
 
   if($arFile){
-    $query1="UPDATE `incoming` SET `status`='Archived',`date`='$date' WHERE id='$arFile' LIMIT 1";
-    $query2="SELECT * FROM `incoming` WHERE `id`='$arFile' LIMIT 1";
+    $query1="UPDATE `incoming_file` SET `status`='Archived',`date`='$date' WHERE id='$arFile' LIMIT 1";
+    $query2="SELECT * FROM `incoming_file` WHERE `id`='$arFile' LIMIT 1";
     $result = $link->query($query2);
     if(mysqli_query($link,$query1) && mysqli_query($link,$query2)){
       $output="<div class='alert alert-success'>

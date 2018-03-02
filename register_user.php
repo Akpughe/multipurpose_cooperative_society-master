@@ -53,17 +53,20 @@ include './php/actions/conn.php';
                 <option value="F">Female</option>
               </select>
             </div>
-         <div class="form-group">
+            <div class="form-group">
               <label for="telephone">Telephone No:</label>
               <input type="number" class="form-control" name="telephone" id="telephone" required placeholder="08145126202" max-length="11" />
          </div>
-            <div class="form-group">
+        </div>
+        <div class="col-md">
+        
+        <div class="form-group">
               <label for="present_address">Present Address:</label>
-              <textarea name="present_address" id="present_address" class="form-control" required></textarea>
+              <textarea name="present_address" colspan="5" id="present_address" class="form-control" required></textarea>
             </div>
             <div class="form-group">
               <label for="permanent_address">Permanent Address:</label>
-              <textarea class="form-control" name="permanent_address" id="permanent_address" required></textarea>
+              <textarea class="form-control" colspan="5" name="permanent_address" id="permanent_address" required></textarea>
             </div>
             <div class="form-group">
               <label for="email">Email Address:</label>
@@ -87,11 +90,15 @@ include './php/actions/conn.php';
               <label for="password">Password:</label>
               <input type="password" class="form-control" name="password" id="password" required />
             </div>
-            <button type="button" class="btn btn-lg btn-dark" id="register_form_button" onclick="submitCall('register')">Login</button>
             </form>
-        </div>
+        </div>   
   </div>
   <hr/>
+  <div class="row">
+    <div class="col-md">
+    <button type="button" class="btn btn-lg btn-dark" id="register_form_button" onclick="submitCall('register')">Login</button>
+    </div>
+  </div>
 </div>
 </body>
 </html>

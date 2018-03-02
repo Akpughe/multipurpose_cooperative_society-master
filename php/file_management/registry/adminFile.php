@@ -1,19 +1,17 @@
 <?php
-  include '../actions/conn.php';
-    $fsp = $_POST["fsp"];
-    $fref =  $_POST["fref"];
-    $fsub =  $_POST["fsub"];
-    $fdept =  $_POST["fdept"];
+  include '../../actions/conn.php';
+    session_start();
+    extract($_POST);
+    extract($_SESSION);
     $fdept2 = "REGISTRY";
-    $frmk =  $_POST["frmk"];
     $fstp = 1;
-    $a= "Outgoing/Creation";
+    $a= "Creation";
     $date = date("Y-m-d h:i:s");
     $stat = "Active";
     $uf = "Registry Personell";
 
-    $query1 = "INSERT INTO `history` (`file_reference`,`file_subject`,`stop_page`,`start_page`,`dept_to`,`dept_from`,`file_remarks`,`date`,`action`,`status`,`user`)VALUES('$fref','$fsub','$fsp','$fstp','$fdept','$fdept2','$frmk','$date','$a','$stat','$uf')";
-    $query2 = "INSERT INTO `incoming` (`file_reference`,`file_subject`,`stop_page`,`start_page`,`dept_to`,`dept_from`,`file_remarks`,`date`,`status`,`user_from`) VALUES ('$fref','$fsub','$fsp','$fstp','$fdept','$fdept2','$frmk','$date','$stat','$uf')";
+    $query1 = "INSERT INTO `history` (`file_reference`,`file_subject`,`stop_page`,`start_page`,`dept_to`,`dept_from`,`file_remarks`,`date`,`action`,`status`,`employee`)VALUES('$fref','$fsub','$fsp','$fstp','$fdept','$fdept2','$frmk','$date','$a','$stat','$uf')";
+    $query2 = "INSERT INTO `incoming_file` (`file_reference`,`file_subject`,`stop_page`,`start_page`,`dept_to`,`dept_from`,`file_remarks`,`date`,`status`,`employee`,`branch_id`,) VALUES ('$fref','$fsub','$fsp','$fstp','$fdept','$fdept2','$frmk','$date','$stat','$uf','$branch_id')";
 
     if($fref==""){
       $issue1.="Please Input File Reference<br />";

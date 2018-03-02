@@ -1,6 +1,8 @@
 <?php 
 include './php/actions/conn.php';
 include './php/actions/login.php';
+
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -24,12 +26,12 @@ include './php/actions/login.php';
   <div class="collapse navbar-collapse" id="navbarContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="./index.php">Home</a>
       </li>
     </ul>
   </div>
 </nav> 
-<br/> 
+<br/> <br/><br/>
 <div class="container  text-center">
       <div class="row">
         <div class="col-md" >

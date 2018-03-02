@@ -1,19 +1,15 @@
 <?php
-  include '../actions/conn.php';
-  $upUser = $_POST["upUser"];
-  $query = "SELECT * FROM users WHERE id=$upUser";
+  include '../../actions/conn.php';
+  session_start();
+
+  extract($_POST);
+  extract($_SESSION);
+
+  $query = "SELECT * FROM employees WHERE `employee_id`='$upUser' AND `branch_id` = '$branch_id' ";
   $result = $link->query($query);
-  $askdb= "SELECT * FROM department";
+  $askdb= "SELECT * FROM departments WHERE `branch_id`='$branch_id'";
   $ansdb = $link->query($askdb);
-  if(mysqli_query($link,$askdb)){
-    if(mysqli_num_rows($ansdb)> 0){
-      while($option = mysqli_fetch_assoc($ansdb)){
-        $dept_list = " <option value='".$option["department_name"]."'>
-        ".$option["department_name"]."
-        </option>";
-      }
-    }
-  }
+  
  ?>
  <!Doctype html>
  <html lang=en>
@@ -22,10 +18,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <script src="../../js/jQuery.js"></script>
-     <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/update.js"></script>
+    <link rel="stylesheet" href='../css/bootstrap.min.css'>
+    <script src="../js/jquery-3.3.1.min.js"></script>
+     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/ajaxhelper.js"></script>
     <script src="../../js/edit.js"></script>
     <style>
 
@@ -72,20 +68,15 @@
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-inverse ">
-      <div class="container-fluid text-center">
-        <div class="navbar-header">
-          <h1 class="navh1 ">Edit User</h1>
-        </div>
-      </div>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top ">
+          <h1 class="navbar-brand ">Edit User</h1>
     </nav>
-    <br /><br />
+    <br /><br /><br/><br/>
     <div class="container-fluid">
       <div class="row upuser_response">
-
       </div>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md">
           <div class="table-responsive">
             <table class="table table-bordered table-hover text-center">
               <tr>
@@ -109,10 +100,19 @@
                 if(mysqli_query($link,$query)){
                   if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_assoc($result)){
-                      echo "<tr><th>".$row["username"]."</th><th>".$row["department"]."</th><th>".$row["email"]."</th><th>".$row["status"]."</th></tr><tr><form action='./updateUser1.php' method='POST' id='nu_form'><td><input placeholder='New UserName' name='nuname' id='nuname' type='text' class='form-control' /></td>
+                      echo "<tr><th>".$row["full_name"]."</th><th>".$row["department"]."</th><th>".$row["email"]."</th><th>".$row["status"]."</th></tr><tr><form action='./updateUser1.php' method='POST' id='nu_form'><td><input placeholder='New UserName' name='nuname' id='nuname' type='text' class='form-control' /></td>
                       <td>
                       <select id='nudept' name='nudept' class='form-control'>
-                        ".$dept_list."
+                        "; 
+                        if(mysqli_query($link,$askdb)){
+                          if(mysqli_num_rows($ansdb)> 0){
+                            while($option = mysqli_fetch_assoc($ansdb)){
+                             echo " <option value='".$option["dept_name"]."'>
+                              ".$option["dept_name"]."
+                              </option>";
+                            }
+                          }
+                        } echo "
                       </select>
                       </td>
                       <td>
@@ -132,7 +132,7 @@
                         <input placeholder='New Password' name='nupass' id='nupass' class='form-control' type='text' />
                       </td>
                       <td>
-                        <button type='submit' id='nusubmit' value='".$row["id"]."' name='nusubmit' class='btn btn-success form-control'>Update</button>
+                        <button type='submit' id='nusubmit' value='".$row["employee_id"]."' name='nusubmit' class='btn btn-success form-control'>Update</button>
                       </td></tr> </form>";
                     }
                   }

@@ -1,21 +1,18 @@
 <?php
 
-    include '../actions/conn.php';
-    $nuname= $_POST["nuname"];
-    $nudept= $_POST["nudept"];
-    $nustatus= $_POST["nustatus"];
-    $nuemail= $_POST["nuemail"];
-    $nupass= $_POST["nupass"];
-    $nusubmit= $_POST["nusubmit"];
+include '../../actions/conn.php';
+    session_start();
+    extract($_POST);
+    extract($_SESSION);
 
-    $sql = "UPDATE `users` SET `username`= '".$nuname."' ,`department`='".$nudept."',`status`='".$nustatus."'
-    ,`email`='".$nuemail."',`password`='".md5(md5($nuemail.$nupass))."' WHERE `id` = '".$nusubmit."'";
+    $sql = "UPDATE `employees` SET `full_name`= '".$nuname."' ,`department`='".$nudept."',`status`='".$nustatus."'
+    ,`email`='".$nuemail."',`password`='".md5(md5($nuemail.$nupass))."' WHERE `employee_id` = '".$nusubmit."'";
     if (mysqli_query($link,$sql)){
       $output = "<div class='alert alert-success'>Updated Successfully. You would be redirected soon</div>";
-      header( "refresh:3;url=http://localhost/File Tracker/php/admin/admin.php" );
+      header( "refresh:3;url=http://localhost/multipurpose_cooperative_society/php/file_management/registry/admin/admin.php" );
     }else{
       $output = "<div class='alert alert-danger'>Error Updating Record:".mysqli_error($link)."</div>";
-      header( "refresh:3;url=http://localhost/File Tracker/php/admin/admin.php" );
+      header( "refresh:3;url=http://localhost/multipurpose_cooperative_society/php/file_management/registry/admin/admin.php" );
     }
     mysqli_close($link);
 ?>

@@ -7,15 +7,12 @@ if($_GET["logout"]==1 && $_SESSION['id']){
   $message="<div class='alert alert-success'>You have been logged out. Have a nice day</div>";
 }
 if($_SERVER["REQUEST_METHOD"] == "POST" ){
-    $type = $_POST["type"];
-    $email = $_POST["email"];
-    $pwd = $_POST["pwd"];
+    extract($_POST);
     if ($email != "" && $pwd != ""){
       if($type== 'user'){
         $email = mysqli_real_escape_string($link,$_POST["email"]);
         $npwd = mysqli_real_escape_string($link,$_POST["pwd"]);
-        $pwd1 = md5(md5($email.$npwd));
-        $query3 = "SELECT * FROM `account_holders` WHERE `email`='$email' AND `password`='$pwd1' LIMIT 1";
+        $query3 = "SELECT * FROM `account_holders` WHERE `email`='$email' AND `password`='$npwd' LIMIT 1";
         $result2 = mysqli_query($link,$query3);
         $row2 = mysqli_fetch_array($result2);
         if($row2){
@@ -27,23 +24,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
           We could not find a user with your input details.
           </div>";
         }
-      }else{
+      }
+      if($type == 'employee'){
         if ($email == "admin@mcs.com" && $pwd == "excellency"){
           header('Location: php/general_management/index.php');
         }else{
-        $email = mysqli_real_escape_string($link,$_POST["email"]);
-        $npwd = mysqli_real_escape_string($link,$_POST["pwd"]);
-        $pwd1 = md5(md5($email.$npwd));
-        $query2 = "SELECT * FROM `employees` WHERE `email`='$email' AND `password`='$pwd1' LIMIT 1";
+        $email = mysqli_real_escape_string($link,$email);
+        $npwd = mysqli_real_escape_string($link,$pwd);
+        $query2 = "SELECT * FROM `employees` WHERE `email`='$email' AND `password`='$npwd' LIMIT 1";
         $result1 = mysqli_query($link, $query2);
         $row1 = mysqli_fetch_array($result1);
          if ($row1){
            switch ($row1["department"]) {
-             case 'Registry Management':
+             case 'Registry':
                 $_SESSION['id']= $row1['employee_id'];
                 $_SESSION['branch_id'] = $row1['branch_id'];
                 if($_SESSION['id'] && $_SESSION['branch_id'])
-                header("Location:../file_management/registry/admin.php");
+                header("Location:./php/file_management/registry/admin.php");
                break;
              case 'Branch Management':
                 $_SESSION['id']= $row1['employee_id'];
@@ -63,12 +60,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
                 if($_SESSION['id'] && $_SESSION['branch_id'])
                 header("Location:../attendance_managment/index.php");
                break; 
-             case 'General Management':
-                $_SESSION['id']= $row1['employee_id'];
-                $_SESSION['branch_id'] = $row1['branch_id'];
-                if($_SESSION['id'] && $_SESSION['branch_id'])
-                header("Location:../general_managment/index.php");
-               break;
              case 'Broadcast Management':
                 $_SESSION['id']= $row1['employee_id'];
                 $_SESSION['branch_id'] = $row1['branch_id'];

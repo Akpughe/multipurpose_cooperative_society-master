@@ -1,14 +1,16 @@
 <?php
   if($_SERVER["REQUEST_METHOD"] == "POST"){
-    include '../actions/conn.php';
-    $ndsubmit = $_POST["ndsubmit"];
-    $ndname = $_POST["ndname"];
+    include '../../actions/conn.php';
+    session_start();
+    extract($_POST);
+    extract($_SESSION);
 
-    $sql = "UPDATE `department` SET `department_name`='".$ndname."' WHERE  `department_name`='".$ndsubmit."'";
-    $query = "UPDATE `users` SET `department`='".$ndname."' WHERE `department` = '".$ndsubmit."' ";
-    $query0 = "UPDATE `incoming` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' OR `dept_from` = '".$ndsubmit."'  ";
-    $query1 = "UPDATE `history` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' OR `dept_from` = '".$ndsubmit."'  ";
-    $query2 = "UPDATE `outgoing` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' OR `dept_from` = '".$ndsubmit."'  ";
+    $sql = "UPDATE `department` SET `dept_name`='".$ndname."' WHERE  `department_name`='".$ndsubmit."' AND `branch_id`='$branch_id'";
+    $query = "UPDATE `employees` SET `department`='".$ndname."' WHERE `department` = '".$ndsubmit."' AND `branch_id`='$branch_id' ";
+    $query0 = "UPDATE `incoming_file` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' AND`dept_from` = '".$ndsubmit."' AND `branch_id` = '$branch_id'  ";
+    $query1 = "UPDATE `history` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' AND `dept_from` = '".$ndsubmit."' AND `branch_id`='$branch_id'  ";
+    $query2 = "UPDATE `outgoing_file` SET `dept_to`='".$ndname."',`dept_from`='".$ndname."' WHERE `dept_to` = '".$ndsubmit."' AND `dept_from` = '".$ndsubmit."' AND `branch_id`='$branch_id'  ";
+    
     if (mysqli_query($link,$sql)&& mysqli_query($link,$query)){
       if (mysqli_query($link,$query0)&& mysqli_query($link,$query1)){
         if (mysqli_query($link,$query2)){

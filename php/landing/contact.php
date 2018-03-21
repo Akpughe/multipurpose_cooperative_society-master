@@ -4,9 +4,6 @@
         <br/>
         <div class="row">
           <div class="col-md">
-            
-          </div>
-          <div class="col-md">
             <form method="POST" action="./php/actions/send_contact.php">
             <div class="form-group">
               <label for="fname">Full Name:</label>

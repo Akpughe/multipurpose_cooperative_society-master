@@ -17,6 +17,7 @@ if($issue3){
   }else{
     echo  "<div class='alert alert-danger text-center'><h5>Failed. Something Seems to be Wrong. Try Again Later</h5></div>";
   }
-  mysqli_close($link);
+
 }
+mysqli_close($link);
  ?>

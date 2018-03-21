@@ -24,4 +24,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST" ){
         echo '<div class="alert alert-danger alert-dismissible">Sorry, something went wrong.</div>';
     }
 }
+mysqli_close($link);
  ?>

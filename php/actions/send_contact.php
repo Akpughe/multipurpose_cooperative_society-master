@@ -18,5 +18,5 @@ else{
 }
 
 }
-
+mysqli_close($link);
 ?>

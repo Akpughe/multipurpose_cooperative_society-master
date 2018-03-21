@@ -25,6 +25,7 @@
       }
     }
   }
+  mysqli_close($link);  
 ?>
 <!Doctype html >
 <html lang="en">

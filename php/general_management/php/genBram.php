@@ -1,8 +1,8 @@
 <?php
 include '../../actions/conn.php';
 session_start();
-extract($_POST);
 extract($_SESSION);
+extract($_POST);
 $uname = mysqli_real_escape_string($link,$uname);
 $uemail = mysqli_real_escape_string($link,$uemail);
 $upwd1 = mysqli_real_escape_string($link,$upwd1);

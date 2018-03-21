@@ -1,11 +1,11 @@
 <?php
-  include '../../actions/db_config.php';
+  include '../../actions/conn.php';
   session_start();
   $userId = $_SESSION['id'];
   $branchId = $_SESSION['branch_id'];
 
   $query = "SELECT * FROM `employees` WHERE `employee_id` = '$userId' LIMIT 1 ";
-  $bquery = "SELECT * FROM `branches` WHERE `branch_id` = '$branchId' LIMIT 1";
+  $bquery = "SELECT * FROM `branchs` WHERE `branch_id` = '$branchId' LIMIT 1";
   $result = mysqli_query($link,$query);
   $bresult = mysqli_query($link,$bquery);
   $brow = mysqli_fetch_array($bresult);
@@ -20,84 +20,43 @@
     <meta charset=utf-8 />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employee Dashboard</title>
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
-    <script src="../../js/jQuery.js"></script>
-    <script src="../../js/bootstrap.min.js"></script>
-    <style>
-      .container{
-        width:auto;
-        height:auto;
-        margin:0 auto;
-      }
-      body {
-        background-color:#102334;
-        height:100%;
-        width:100%;
-      }
-
-      h1,h2,h3 {
-        color:#CCA567 ;
-        font-weight: bold;
-      }
-      .navh1 {
-        color: #CCA567 !important;
-        font-weight: bold !important;
-      }
-      p {
-        padding-top:15px;
-        padding-button:15px;
-      }
-      .btn-md{
-        border:none !important;
-        height:160px;
-        width:160px;
-        opacity: 0.7;
-      }
-      .btn-mda{
-        border:none !important;
-        height:220px;
-        width:220px;
-        opacity:0.7;
-      }
-      .icon{
-        font-size: 60px;
-        font-size-adjust: auto;
-      }
-      .icona {
-        font-size: 90px;
-        font-size-adjust: auto;
-      }
-      h4 {
-        font-size: 20px;
-        line-height: 1.375em;
-        font-weight: 400;
-        margin-bottom: 30px;
-        font-size-adjust: auto;
-      }
-    </style>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/index.js"></script>
+    <script src="../js/ajaxhelper.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    
     <script>alert("Refresh to view Changes after any action");</script>
   </head>
   <body>
-    <nav class="navbar navbar-inverse ">
-      <div class="container-fluid text-center">
-        <div class="navbar-header">
-          <h1 class="navh1 ">Welcome <?php echo " ".$nameDisplay."<h4 > in ".$deptDisplay."  Department</h4>"; ?></h1>
-          <small>MCS Branch <?php echo "".$branchDisplay."" ?></small>
-        </div>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="../../index.php?logout=1"> Logout</a></li>
-        </ul>
-
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+      <h1 class="navbar-brand">Welcome <?php echo " ".$nameDisplay." in ".$deptDisplay."  Department"; ?></h1>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="../../../login_page.php?logout=1">Logout</a>
+        </li>
+      </ul>
       </div>
     </nav>
-    <div class="container">
-      <div class="row text-center">
-        <h1>Incoming/Outgoing Management</h1>
-        <div class="col-md-6 text-center">
-          <button type="button" class="btn btn-default btn-mda text-center" data-toggle="modal" data-target="#fI"><span class="glyphicon glyphicon-log-in icona"></span><h1>Incoming</h1></button>
+    <div class="container text-center" style="margin-top:100px;">
+      <br/><br/><br/>
+      <h2>Incoming/Outgoing Management</h2>
+        <br/>
+      <div class="row text-center" >
+        <div class="col-md text-center">
+          <button type="button" class="btn btn-dark btn-lg text-center" data-toggle="modal" data-target="#fI">Incoming</button>
         </div>
-        <div class="col-md-6 text-center">
-          <button type="button" class="btn btn-default btn-mda text-center" data-toggle="modal" data-target="#fO"><span class="glyphicon glyphicon-log-out icona"></span><h1>Outgoing</h1></button>
+        <div class="col-md text-center">
+          <button type="button" class="btn btn-dark btn-lg text-center" data-toggle="modal" data-target="#fO">Outgoing</button>
+        </div>
+      </div>
+      <h2>Broadcast</h2>
+        <br/>
+      <div class="row text-center">
+        
+        <div class="col-md text-center">
+           <button type="button" class="btn btn-dark btn-lg text-center" data-toggle="modal" data-target="#broad">Broadcast</button>
         </div>
       </div>
     </div>
@@ -117,13 +76,13 @@
                     <table class="table-bordered table table-hover">
                       <tr>
                         <th>
-                          <h4>File Reference</h4>
+                          File Reference
                         </th>
                         <th>
-                          <h4>File Subject</h4>
+                          File Subject
                         </th>
                         <th>
-                          <h4>Date Created</h4>
+                          Date Created
                         </th>
                       </tr>
                       <?php
@@ -154,7 +113,7 @@
                     </table>
                   </div>
                 </div>
-            </div>..
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -166,38 +125,38 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h2 class="modal-title" >Outgoing</h2>
+            <h3 class="modal-title" >Outgoing</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            .<div class="container-fluid text-center">
+            <div class="container-fluid text-center">
                 <div class="row">
-                  <h2>Accepted List</h2>
+                  <h3>Accepted List</h3>
                   <div class="table-responsive">
                     <table class="table table-bordered table-hover">
                       <tr>
                         <th>
-                          <h4>File Reference</h4>
+                          File Reference
                         </th>
                         <th>
-                          <h4>File Subject</h4>
+                          File Subject
                         </th>
                         <th>
-                          <h4>Start Page</h4>
+                          Start Page
                         </th>
                         <th>
-                          <h4>Stop Page</h4>
+                          Stop Page
                         </th>
                         <th>
-                          <h4>Dept From:</h4>
+                          Dept From:
                         </th>
                         <th>
-                          <h4>Remarks</h4>
+                          Remarks
                         </th>
                         <th>
-                          <h4>Date Created</h4>
+                          Date Created
                         </th>
                       </tr>
                       <?php
@@ -244,36 +203,36 @@
             </div>
             <div class="container-fluid text-center">
               <div class="row">
-                <h2>Outwards List</h2>
+                <h3>Outwards List</h3>
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <tr>
                       <th>
-                        <h4>File Reference</h4>
+                        File Reference
                       </th>
                       <th>
-                        <h4>File Subject</h4>
+                        File Subject
                       </th>
                       <th>
-                        <h4>Start Page</h4>
+                        Start Page
                       </th>
                       <th>
-                        <h4>Stop Page</h4>
+                        Stop Page
                       </th>
                       <th>
-                        <h4>File Remarks</h4>
+                        File Remarks
                       </th>
                       <th>
-                        <h4>Dept To</h4>
+                        Dept To
                       </th>
                       <th>
-                        <h4>Status</h4>
+                        Status
                       </th>
                       <th>
-                        <h4>Folio Out</h4>
+                        Folio Out
                       </th>
                       <th>
-                        <h4>Date</h4>
+                        Date
                       </th>
                     </tr>
                     <?php
@@ -326,6 +285,74 @@
         </div>
       </div>
     </div>
+    <div class="modal fade" id="broad" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalLabel">Broadcast Management</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid text-center">
+            <div class="row response5">
+
+            </div>
+          </div>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md">
+                <table class="table">
+                  <tr>
+                    <th>
+                      Title
+                    </th>
+                    <th>
+                      Message
+                    </th>
+                    <th>
+                      Status
+                    </th>
+                    <th>
+                      Date Created
+                    </th>
+                  </tr>
+                  <?php
+                  $queryi = "SELECT * FROM `broadcast` WHERE `branch_id`='$branch_id' AND (`status`='Branch' OR `status`='General')";
+                  $resulti = $link->query($queryi);
+                  if (mysqli_query($link, $queryi)) {
+                    if (mysqli_num_rows($resulti) > 0) {
+                      while ($rowi = mysqli_fetch_assoc($resulti)) {
+                        echo "<tr>
+                          <td>
+                          " . $rowi["title"] . "
+                          </td>
+                          <td>
+                          " . $rowi["message"] . "
+                          </td>
+                          <td>
+                          " . $rowi["status"] . "
+                          </td>
+                          <td>
+                          " . $rowi["creation_date"] . "
+                          </td>
+                          </tr>";
+                      }
+                    }
+                  }
+                  ?>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </body>
 
 </html>

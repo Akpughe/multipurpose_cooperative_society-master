@@ -29,7 +29,7 @@ include './php/actions/conn.php';
    <div id="register_form_response"></div>
   <div class="row">
         <div class="col-md"> 
-          <form method="POST" id="register_form" role="form" action="./php/actions/register.php///">
+          <form method="POST" id="register_form" role="form" action="./php/actions/register.php">
           <div class="form-group">
               <label for="full_name">Full Name:</label>
               <input type="text" class="form-control" name="full_name" id="full_name" required placeholder="John Doe" />
@@ -58,8 +58,7 @@ include './php/actions/conn.php';
               <input type="number" class="form-control" name="telephone" id="telephone" required placeholder="08145126202" max-length="11" />
          </div>
         </div>
-        <div class="col-md">
-        
+        <div class="col-md">   
         <div class="form-group">
               <label for="present_address">Present Address:</label>
               <textarea name="present_address" colspan="5" id="present_address" class="form-control" required></textarea>

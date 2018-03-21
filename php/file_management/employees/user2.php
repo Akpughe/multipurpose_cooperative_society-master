@@ -1,5 +1,5 @@
 <?php
-  include '../../actions/db_config.php';
+  include '../../actions/conn.php';
   session_start();
   $userId = $_SESSION['id'];
   $branchId = $_SESSION['branch_id'];

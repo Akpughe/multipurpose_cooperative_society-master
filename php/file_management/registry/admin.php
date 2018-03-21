@@ -228,7 +228,7 @@ extract($_SESSION);
                     <label for="frmk">Remarks:</label>
                     <input class="form-control" name="frmk" placeholder="Input Remark" id="frmk" type="text" />
                   </div>
-                  <button type="button" id="genFile_submit" class="btn btn-lg btn-danger">Create File</button>
+                  <button type="button" id="genFile_submit" class="btn btn-lg btn-danger" onclick="submitCall('genFile')">Create File</button>
                 </form>
 
               </div>
@@ -358,7 +358,7 @@ extract($_SESSION);
                     <label for="dname">Department Name:</label>
                     <input type="text" class="form-control" placeholder="Input Department Name" name="dname" id="dname" />
                   </div>
-                  <button type="button" id="genDept_form_button" class="btn btn-lg btn-dark" onclick="submitCall('genDept')">Register</button>
+                  <button type="button" id="genDept_form_button" onclick="submitCall('genDept')" class="btn btn-lg btn-dark" onclick="submitCall('genDept')">Register</button>
                 </form>
               </div>
             </div>

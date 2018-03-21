@@ -5,29 +5,22 @@
         <div class="row">
           <div class="col-md">
             <h4>Loan Acquisition</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-          </div>
-          <div class="col-md">
-            <h4>Commodity Sales</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <p>Our System offers Loans with minimal and flexible rates</p>
           </div>
           <div class="col-md">
             <h4>Attendance Management</h4>
-            <p></p>
+            <p>Our System Offers efficient attendance tracking for meetings scheduled</p>
           </div>  
          </div>
          <br/>
          <div class="row">  
           <div class="col-md">
-            <h4>Employment Provision</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-          </div>
-          <div class="col-md">
-            <h4>Savings Promotion</h4>
-            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+            <h4>Broadcast Managment</h4>
+            <p>Spread of Messages has never been Easier with this System.</p>
           </div>
           <div class="col-md">
             <h4>Physical File Tracking</h4>
+            <p>Track the Movement of physical files with ease with the System.</p>
           </div>  
         </div>
         <small>And much more to love..</small>

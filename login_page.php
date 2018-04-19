@@ -1,8 +1,6 @@
 <?php 
-include './php/actions/conn.php';
-include './php/actions/login.php';
-
-
+require './php/actions/conn.php';
+require './php/actions/login.php';
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
